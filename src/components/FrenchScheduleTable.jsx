@@ -40,12 +40,12 @@ export default function FrenchScheduleTable({ plan, showPaymentAction, onPay }) 
       <div className="schedule-heading">
         <h2>Tabla de método francés</h2>
         <p>
-          Quincenal · {plan.paymentPeriodDays || 15} días · {plan.installmentCount} cuotas
-          {' '}· TEA {percent(plan.teaPactada)} · TEQ {percent(plan.teq)}
+          Quincenal * {plan.paymentPeriodDays || 15} días * {plan.installmentCount} periodos
+          {' '}* TEA {percent(plan.teaPactada)} * TEQ {percent(plan.teq)}
         </p>
         <p>
           {plan.diasGraciaTotal > 0
-            ? `Gracia total: ${plan.diasGraciaTotal} día${plan.diasGraciaTotal === 1 ? '' : 's'} hasta la primera fecha de corte pactada con el cliente`
+            ? 'Gracia total en el periodo 1 (15 días desde la compra): el interés se calcula con la TEQ y se capitaliza.'
             : 'Sin gracia total en este crédito'}
         </p>
       </div>
@@ -113,6 +113,45 @@ export default function FrenchScheduleTable({ plan, showPaymentAction, onPay }) 
             </tr>
           </tfoot>
         </table>
+      </div>
+      <div className="schedule-card-list">
+        {installments.map((item, index) => (
+          <article key={item.id ?? index} className={`schedule-card ${statusRowClass(item.estado)}`}>
+            <div className="schedule-card-heading">
+              <strong>Cuota {item.installmentNumber}</strong>
+              <span>{STATUS_LABEL[item.estado] || item.estado}</span>
+            </div>
+            <dl className="schedule-card-fields">
+              <div><dt>Vencimiento</dt><dd>{date(item.dueDate)}</dd></div>
+              <div><dt>Días del periodo</dt><dd>{item.diasPeriodo}</dd></div>
+              <div><dt>Tasa del periodo</dt><dd>{percent(item.tasaPeriodo)}</dd></div>
+              <div><dt>Tipo</dt><dd>{TYPE_LABEL[item.type] || item.type}</dd></div>
+              <div><dt>Saldo inicial</dt><dd>{money(item.openingBalance)}</dd></div>
+              <div><dt>Interés</dt><dd>{money(item.interest)}</dd></div>
+              <div><dt>Cuota</dt><dd>({money(item.amount)})</dd></div>
+              <div><dt>Amortización</dt><dd>({money(item.amortization)})</dd></div>
+              <div><dt>Saldo final</dt><dd>{money(item.remainingBalance)}</dd></div>
+              <div><dt>Días de mora</dt><dd>{item.diasMora || 0}</dd></div>
+              <div><dt>Interés moratorio</dt><dd>({money(item.interesMoratorio)})</dd></div>
+              <div><dt>Pago total</dt><dd>({money(item.pagoTotal)})</dd></div>
+            </dl>
+            {showPaymentAction && index === firstPayableIndex && (
+              <div className="schedule-card-pay">
+                <button className="primary-button" type="button" onClick={() => onPay(item)}>Pagar cuota</button>
+              </div>
+            )}
+          </article>
+        ))}
+        <article className="schedule-card schedule-card-totals">
+          <div className="schedule-card-heading"><strong>Totales</strong></div>
+          <dl className="schedule-card-fields">
+            <div><dt>Intereses</dt><dd>{money(plan.totalIntereses)}</dd></div>
+            <div><dt>Cuotas</dt><dd>({money(plan.totalCuotas)})</dd></div>
+            <div><dt>Amortización</dt><dd>({money(plan.totalAmortizacion)})</dd></div>
+            <div><dt>Interés moratorio</dt><dd>({money(plan.totalInteresMoratorio)})</dd></div>
+            <div><dt>Pago total con mora</dt><dd>({money(plan.totalAPagarConMora)})</dd></div>
+          </dl>
+        </article>
       </div>
     </div>
   )

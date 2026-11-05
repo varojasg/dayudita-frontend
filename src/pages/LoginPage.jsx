@@ -52,7 +52,6 @@ export default function LoginPage() {
         <img className="login-deco login-deco-one" src={starPair} alt="" aria-hidden="true" />
         <img className="login-deco login-deco-two" src={starRays} alt="" aria-hidden="true" />
         <img className="login-deco login-deco-three" src={starPink} alt="" aria-hidden="true" />
-        <p className="login-phrase">Más momentos bonitos ♡</p>
       </section>
 
       <section className="login-form-panel">

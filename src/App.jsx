@@ -60,6 +60,7 @@ export default function App() {
       <Route element={<ProtectedRoute role="STORE_ADMIN"><AppLayout /></ProtectedRoute>}>
         <Route path="/store/clients" element={<StoreClientsPage />} />
         <Route path="/store/credits" element={<StoreCreditsPage />} />
+        <Route path="/store/credits/:planId" element={<StoreCreditsPage />} />
         <Route path="/store/credit-policy" element={<StoreCreditPolicyPage />} />
         <Route path="/store/profile" element={<StoreProfilePage />} />
       </Route>

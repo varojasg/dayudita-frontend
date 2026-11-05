@@ -81,7 +81,7 @@ export default function StoreCreditPolicyPage() {
         <span>Moneda <strong>{form.currency}</strong></span>
         <span>Año comercial <strong>{form.commercialYearDays} días</strong></span>
         <span>Cuotas <strong>cada {form.paymentPeriodDays} días</strong></span>
-        <span>Fechas de corte <strong>15 y 30 de cada mes</strong></span>
+        <span>Vencimientos <strong>contados desde la fecha de compra</strong></span>
       </div>
 
       <form className="finance-form" onSubmit={save}>
@@ -141,7 +141,7 @@ export default function StoreCreditPolicyPage() {
               checked={Boolean(form.otorgaGracia)}
               onChange={event => updateField('otorgaGracia', event.target.checked)}
             />
-            Otorga gracia total por fecha de corte (15 y 30 de cada mes)
+            Otorga gracia total en el primer periodo (15 días desde la compra, interés a la TEQ y capitalizado)
           </label>
         </div>
         <button className="primary-button" type="submit">Guardar</button>

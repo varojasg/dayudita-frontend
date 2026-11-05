@@ -6,6 +6,7 @@ import PageBanner from '../../components/PageBanner'
 
 // Fijada por el sistema (dayudita.tea-moratoria en el backend); no es editable.
 const TEA_MORATORIA_FIJA = 12
+const DIA_CORTE_HINT = 'No define el cronograma: los periodos se cuentan cada 15 días desde la fecha de compra.'
 
 const emptyClient = {
   firstName: '',
@@ -196,7 +197,7 @@ export default function StoreClientsPage() {
                 <th>Moneda</th>
                 <th>Límite</th>
                 <th>Plazo máx.</th>
-                <th>Día corte</th>
+                <th>Día de corte (informativo)</th>
                 <th>Estado</th>
                 <th>Acciones</th>
               </tr>
@@ -354,7 +355,7 @@ export default function StoreClientsPage() {
               />
             </label>
             <label>
-              Día de corte (1-31)
+              Día de corte (informativo)
               <input
                 type="number"
                 min="1"
@@ -364,6 +365,7 @@ export default function StoreClientsPage() {
                 onChange={event => setForm({ ...form, diaCorte: event.target.value })}
                 required
               />
+              <small className="field-hint">{DIA_CORTE_HINT}</small>
             </label>
 
             <div className="form-actions full-span">
@@ -455,7 +457,7 @@ export default function StoreClientsPage() {
                     />
                   </label>
                   <label>
-                    Día de corte (1-31)
+                    Día de corte (informativo)
                     <input
                       type="number"
                       min="1"
@@ -465,6 +467,7 @@ export default function StoreClientsPage() {
                       onChange={event => setForm({ ...form, diaCorte: event.target.value })}
                       required
                     />
+                    <small className="field-hint">{DIA_CORTE_HINT}</small>
                   </label>
                   <button className="primary-button" type="submit">Asociar a mi tienda</button>
                 </>
